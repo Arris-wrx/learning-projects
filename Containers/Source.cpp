@@ -11,7 +11,7 @@
 #include <unordered_set>
 #include <unordered_map>
 
-constexpr size_t n = 10000000;
+constexpr size_t n = 1000000;
 
 using time_s = std::chrono::high_resolution_clock;
 using second = std::chrono::duration<double, std::ratio<1>>;
@@ -173,11 +173,20 @@ int main()
 	start();
 	for (size_t i = 0; i < n; ++i)
 	{
+		a = rand() % (n - 1);
+		it2 = map.find(a);
+	}
+	t = stop();
+	std::cout << "\tMap: " << t << std::endl;
+
+	start();
+	for (size_t i = 0; i < n; ++i)
+	{
 		a = rand()%(n-1);
 		it3 = u_set.find(a);
 	}
 	t = stop();
-	std::cout << "\tSet: " << t << std::endl;
+	std::cout << "\tU_Set: " << t << std::endl;
 
 	start();
 	for (size_t i = 0; i < n; ++i)
@@ -186,7 +195,7 @@ int main()
 		it4 = u_map.find(a);
 	}
 	t = stop();
-	std::cout << "\tMap: " << t << std::endl;
+	std::cout << "\tU_Map: " << t << std::endl;
 
 //----------delete elements
 	std::cout << "Delete time:" << std::endl;
