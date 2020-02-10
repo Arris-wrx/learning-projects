@@ -330,7 +330,8 @@ int main()
 	{
 		std::cout << "\nPress 0 for show all tel book\nPress 1 for search\nPress q for exit\n";
 		std::cin.get(q);
-
+		std::cin.ignore(std::cin.rdbuf()->in_avail());
+		
 		std::string search_buff;
 		switch (q)
 		{
@@ -342,7 +343,6 @@ int main()
 			break;
 		case '1':
 			std::cout << "Insert request in format [Name[*]] [+7Tel[*]]\n";
-			std::cin.ignore(std::cin.rdbuf()->in_avail());
 			std::getline(std::cin, search_buff);
 			if (search_buff.find('*') == -1)
 				tel_book.search(search_buff);
@@ -352,7 +352,6 @@ int main()
 		default:
 			break;
 		}
-		std::cin.ignore(std::cin.rdbuf()->in_avail());
 	}
 	
 	
