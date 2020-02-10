@@ -1,7 +1,7 @@
-cmake_minimum_required (VERSION 3.1)
+cmake_minimum_required(VERSION 3.1)
 
-project (2)
+project(Wildcard)
 
 include_directories(include)
 
-add_executable(main Source.cpp)
+add_executable(wildcard Wildcard.cpp)
