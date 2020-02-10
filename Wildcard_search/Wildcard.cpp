@@ -330,7 +330,7 @@ int main()
 	{
 		std::cout << "\nPress 0 for show all tel book\nPress 1 for search\nPress q for exit\n";
 		std::cin.get(q);
-		std::cin.ignore(std::cin.rdbuf()->in_avail());
+		std::cin.ignore(std::cin.rdbuf()->in_avail(), '\n');
 		
 		std::string search_buff;
 		switch (q)
