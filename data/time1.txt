@@ -1,0 +1,15 @@
+Hello!
+	U_Set: 0.751941
+	U_Map: 0.773451
+	U_Set1: 0.309282
+	U_Map1: 0.335312
+Search time:
+	U_Set: 0.379292
+	U_Map: 0.385186
+	U_Set1: 0.308754
+	U_Map1: 0.302529
+Delete time:
+	U_Set: 0.453005
+	U_Map: 0.473162
+	U_Set1: 0.206482
+	U_Map1: 0.224421

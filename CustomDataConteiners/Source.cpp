@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
 #include <chrono>
 #include <array>
@@ -10,9 +11,48 @@
 #include <map>
 #include <unordered_set>
 #include <unordered_map>
+#include <limits.h>
 
-constexpr size_t n = 1000000;
+constexpr size_t n = 1'000'000;
 //---------------prod
+struct Prod1
+{
+	size_t id;
+	double price;
+
+	Prod1()
+	{
+
+	}
+
+	Prod1(size_t i, double d) : id(i), price(d)
+	{
+
+	}
+	
+	Prod1(const Prod1 &p) : id(p.id), price(p.price)
+	{
+
+	}
+};
+
+bool operator< (const Prod1& p1, const Prod1& p2)
+{
+	return p1.id < p2.id;
+}
+
+bool operator== (const Prod1& p1, const Prod1& p2)
+{
+	return p1.id == p2.id && p1.price == p2.price;
+}
+
+template<> struct std::hash<Prod1> {
+	size_t operator() (const Prod1& arg) const {
+		return arg.id;
+	}
+};
+
+
 struct Prod
 {
 	size_t id;
@@ -72,25 +112,32 @@ auto stop()
 
 int main()
 {
+	
+	std::ofstream outf ("../../data/time1.txt");
+	
 	std::cout << "Hello!" << std::endl;
+	outf << "Hello!" << std::endl;
 //-----------declare variables
 	double t = 0;
-	auto arr = new std::array<Prod, n>; // такое объ€вление, потому что Linux создает на стеке
+	//auto arr = new std::array<Prod, n>; 
 	
 	Prod P = { 0, 0 };
+	Prod1 P1 = { 0, 0 };
 	
-	std::vector<Prod> vector;
-	std::deque<Prod> deq;
-	std::list<Prod> list;
-	std::set<Prod> set;
-	std::map<Prod, int> map;
+	//std::vector<Prod> vector;
+	//std::deque<Prod> deq;
+	//std::list<Prod> list;
+	//std::set<Prod> set;
+	//std::map<Prod, int> map;
 	std::unordered_set<Prod> u_set;
 	std::unordered_map<Prod, int> u_map;
+	std::unordered_set<Prod1> u_set1;
+	std::unordered_map<Prod1, int> u_map1;
 
 	srand(1234);
 //-----insert elements
 
-	std::cout << "Insert time" << std::endl;
+/*	std::cout << "Insert time" << std::endl;
 
 	start();
 	for (size_t i = 0; i < n; ++i)
@@ -158,7 +205,7 @@ int main()
 	}
 	t = stop();
 	std::cout << "\tMap: " << t << std::endl;
-
+*/
 	start();
 	for (size_t i = 0; i < n; ++i)
 	{
@@ -167,6 +214,7 @@ int main()
 	}
 	t = stop();
 	std::cout << "\tU_Set: " << t << std::endl;
+	outf << "\tU_Set: " << t << std::endl;
 
 	start();
 	for (size_t i = 0; i < n; ++i)
@@ -176,19 +224,41 @@ int main()
 	}
 	t = stop();
 	std::cout << "\tU_Map: " << t << std::endl;
+	outf << "\tU_Map: " << t << std::endl;
+	
+	start();
+	for (size_t i = 0; i < n; ++i)
+	{
+		P1 = { i, (double)i * 100 / INT_MAX };
+		u_set1.insert(P1);
+	}
+	t = stop();
+	std::cout << "\tU_Set1: " << t << std::endl;
+	outf << "\tU_Set1: " << t << std::endl;
+
+	start();
+	for (size_t i = 0; i < n; ++i)
+	{
+		P1 = { i, (double)i * 100 / INT_MAX };
+		u_map1.insert(std::make_pair(P1, i+100));
+	}
+	t = stop();
+	std::cout << "\tU_Map1: " << t << std::endl;
+	outf << "\tU_Map1: " << t << std::endl;
 
 //-----------get one value
 
 	std::cout << "Search time:" << std::endl;
+	outf << "Search time:" << std::endl;
 
 	size_t a = 0;
-	Prod temp;
+/*	Prod temp;
 	std::set<Prod>::iterator it1;
 	std::map<Prod,int>::iterator it2;
 	std::unordered_set<Prod>::iterator it3;
 	std::unordered_map<Prod,int>::iterator it4;
-
-	start();
+*/
+/*	start();
 	for (size_t i = 0; i < n/10; ++i)
 	{
 		a = rand()%(n-1);
@@ -234,31 +304,58 @@ int main()
 	}
 	t = stop();
 	std::cout << "\tMap: " << t << std::endl;
-
+*/
+	
 	start();
 	for (size_t i = 0; i < n; ++i)
 	{
 		a = rand()%(n-1);
 		P = { a, (double)a * 100 / INT_MAX };
-		it3 = u_set.find(P);
+	auto it3 = u_set.find(P);
 	}
 	t = stop();
 	std::cout << "\tU_Set: " << t << std::endl;
+	outf << "\tU_Set: " << t << std::endl;
 
 	start();
 	for (size_t i = 0; i < n; ++i)
 	{
 		a = rand()%(n-1);
 		P = { a, (double)a * 100 / INT_MAX };
-		it4 = u_map.find(P);
+		auto it4 = u_map.find(P);
 	}
 	t = stop();
 	std::cout << "\tU_Map: " << t << std::endl;
+	outf << "\tU_Map: " << t << std::endl;
+	
+	
+	start();
+	for (size_t i = 0; i < n; ++i)
+	{
+		a = rand()%(n-1);
+		P1 = { a, (double)a * 100 / INT_MAX };
+	auto it5 = u_set1.find(P1);
+	}
+	t = stop();
+	std::cout << "\tU_Set1: " << t << std::endl;
+	outf << "\tU_Set1: " << t << std::endl;
+
+	start();
+	for (size_t i = 0; i < n; ++i)
+	{
+		a = rand()%(n-1);
+		P1 = { a, (double)a * 100 / INT_MAX };
+		auto it6 = u_map1.find(P1);
+	}
+	t = stop();
+	std::cout << "\tU_Map1: " << t << std::endl;
+	outf << "\tU_Map1: " << t << std::endl;
 
 //----------delete elements
 	std::cout << "Delete time:" << std::endl;
+	outf << "Delete time:" << std::endl;
 
-	start();
+/*	start();
 	for (size_t i = 0; i < n; ++i)
 	{
 		vector.pop_back();
@@ -299,6 +396,7 @@ int main()
 	}
 	t = stop();
 	std::cout << "\tMap: " << t << std::endl;
+*/
 
 	start();
 	for (size_t i = 0; i < n; ++i)
@@ -308,6 +406,7 @@ int main()
 	}
 	t = stop();
 	std::cout << "\tU_Set: " << t << std::endl;
+	outf << "\tU_Set: " << t << std::endl;
 
 	start();
 	for (size_t i = 0; i < n; ++i)
@@ -317,7 +416,30 @@ int main()
 	}
 	t = stop();
 	std::cout << "\tU_Map: " << t << std::endl;
+	outf << "\tU_Map: " << t << std::endl;
+	
+	
+		start();
+	for (size_t i = 0; i < n; ++i)
+	{
+		P1 = { i, (double)i * 100 / INT_MAX };
+		u_set1.erase(P1);
+	}
+	t = stop();
+	std::cout << "\tU_Set1: " << t << std::endl;
+	outf << "\tU_Set1: " << t << std::endl;
 
-	delete arr;
+	start();
+	for (size_t i = 0; i < n; ++i)
+	{
+		P1 = { i, (double)i * 100 / INT_MAX };
+		u_map1.erase(P1);
+	}
+	t = stop();
+	std::cout << "\tU_Map1: " << t << std::endl;
+	outf << "\tU_Map1: " << t << std::endl;
+
+	outf.close();
+	//delete arr;
 	return 0;
 }
