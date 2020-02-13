@@ -1,0 +1,48 @@
+Insert time
+	Sequential Array: 0.0307278
+	Random Array: 0.0522106
+	Sequential Vector: 0.120377
+	Random Vector: 0.113565
+	Vector reserved memory: 0.0994761
+	Sequential Deque: 0.106233
+	Random Deque: 0.102132
+	List: 0.725292
+	Set: 7.92526
+	M_Set: 7.47743
+	Map: 7.32103
+	M_Map: 7.12134
+	U_Set: 3.05574
+	U_M_Set: 3.04926
+	U_Map: 3.30081
+	U_M_Map: 3.27395
+Search time:
+	Find in Random Array: 3.86763
+	Binary_search in Sorted Array: 0.0336828
+	Find in Random Vector: 7.37855
+	Binary_search in Sorted Vector: 0.0393464
+	Find in Random Deque: 15.2101
+	Find in sorted Deque: 0.115695
+	Find in Random List: 15.8529
+	Binary_search in Set: 0.0718643
+	Binary_search in M_Set: 0.0734212
+	Binary_search in Map: 0.0723086
+	Binary_search in M_Map: 0.0715888
+	Find in U_Set: 0.0178241
+	Find in U_M_Set: 0.0177157
+	Find in U_Map: 0.0196215
+	Find in U_M_Map: 0.0194717
+Delete time:
+Array do not access deleting
+	Random Vector: ----
+	Sequential Vector: ----
+	Random Deque: ----
+	Sequential Deque: ----
+	List: 0.580604
+	Set: 2.14893
+	M_Set: 2.16988
+	Map: 2.1091
+	M_Map: 2.09731
+	U_Set: ----
+	M_U_Set: ----
+	U_Map: 0.0107912
+	M_U_Map: ----

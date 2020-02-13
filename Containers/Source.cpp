@@ -403,7 +403,7 @@ int main()
 	start();
 	for (auto it = seq_vector.begin() + n/2; it != seq_vector.end();)
 	{
-		it = seq_vector.erase(it != seq_vector.begin() ? it - 1 : it);
+		it = seq_vector.erase(it != seq_vector.begin() ? --it : it);
 	}
 	t = stop();
 	std::cout << "\tSequential Vector: " << t << std::endl;
@@ -413,7 +413,7 @@ int main()
 	start();
 	for (size_t i = 0; i < n; ++i)
 	{
-		rand_deq.erase(rand_deq.begin() + +(rand() % (n - i)));
+		rand_deq.erase(rand_deq.begin() + (rand() % (n - i)));
 	}
 	t = stop();
 	std::cout << "\tRandom Deque: " << t << std::endl;
@@ -423,7 +423,7 @@ int main()
 	for (auto it = seq_deq.begin() + n/2; it != seq_deq.end();)
 	{
 		//seq_deq.erase(seq_deq.begin() + (n-i)/2);
-		it = seq_deq.erase(it != seq_deq.begin() ? it - 1 : it);
+		it = seq_deq.erase(it != seq_deq.begin() ? --it : it);
 	}
 	t = stop();
 	std::cout << "\tSequential Deque: " << t << std::endl;
