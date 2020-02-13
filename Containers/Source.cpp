@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -14,7 +14,7 @@
 #include <random>
 #include <algorithm>
 
-constexpr size_t n = 1'000'000;
+constexpr size_t n = 5'000'000;
 
 using time_s = std::chrono::high_resolution_clock;
 using second = std::chrono::duration<double, std::ratio<1>>;
@@ -34,12 +34,12 @@ auto stop()
 int main()
 {
 
-	std::ofstream outf("../data/time.txt");
+	std::ofstream outf("../../data/time.txt");
 
 	std::cout << "Hello!" << std::endl;
 
 	//-----------declare variables
-	double t = 0;
+	double t = 0; int m = 100;
 	auto seq_arr = new std::array<int, n>;
 	auto rand_arr = new std::array<int, n>;
 	std::vector<int> seq_vector;
@@ -175,7 +175,7 @@ int main()
 	start();
 	for (size_t i = 0; i < n; ++i)
 	{
-		map.insert(std::make_pair(init_arr->at(i), i + 100));
+		map.insert(std::make_pair(init_arr->at(i), i + m));
 	}
 	t = stop();
 	std::cout << "\tMap: " << t << std::endl;
@@ -184,7 +184,7 @@ int main()
 	start();
 	for (size_t i = 0; i < n; ++i)
 	{
-		m_map.insert(std::make_pair(init_arr->at(i), i + 100));
+		m_map.insert(std::make_pair(init_arr->at(i), i + m));
 	}
 	t = stop();
 	std::cout << "\tM_Map: " << t << std::endl;
@@ -213,7 +213,7 @@ int main()
 	start();
 	for (size_t i = 0; i < n; ++i)
 	{
-		u_map.insert(std::make_pair(i, i + 100));
+		u_map.insert(std::make_pair(init_arr->at(i), i + m));
 	}
 	t = stop();
 	std::cout << "\tU_Map: " << t << std::endl;
@@ -222,7 +222,7 @@ int main()
 	start();
 	for (size_t i = 0; i < n; ++i)
 	{
-		u_m_map.insert(std::make_pair(i, i + 100));
+		u_m_map.insert(std::make_pair(init_arr->at(i), i + m));
 	}
 	t = stop();
 	std::cout << "\tU_M_Map: " << t << std::endl;
@@ -237,20 +237,18 @@ int main()
 
 	// array
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		std::find(rand_arr->begin(), rand_arr->end(), a);
+		std::find(rand_arr->begin(), rand_arr->end(), init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tFind in Random Array: " << t << std::endl;
 	outf << "\tFind in Random Array: " << t << std::endl;
 
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		std::binary_search(seq_arr->begin(), seq_arr->end(), a);
+		std::binary_search(seq_arr->begin(), seq_arr->end(), init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tBinary_search in Sorted Array: " << t << std::endl;
@@ -258,20 +256,18 @@ int main()
 
 	// vector
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		std::find(rand_vector.begin(), rand_vector.end(), a);
+		std::find(rand_vector.begin(), rand_vector.end(), init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tFind in Random Vector: " << t << std::endl;
 	outf << "\tFind in Random Vector: " << t << std::endl;
 
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		std::binary_search(seq_vector.begin(), seq_vector.end(), a);;
+		std::binary_search(seq_vector.begin(), seq_vector.end(), init_arr->at(i));;
 	}
 	t = stop();
 	std::cout << "\tBinary_search in Sorted Vector: " << t << std::endl;
@@ -279,20 +275,18 @@ int main()
 
 	// deque
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		/*std::find(rand_deq.begin(), rand_deq.end(), a);*/
+		std::find(rand_deq.begin(), rand_deq.end(), init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tFind in Random Deque: " << t << std::endl;
 	outf << "\tFind in Random Deque: " << t << std::endl;
 
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		std::binary_search(seq_deq.begin(), seq_deq.end(), a);
+		std::binary_search(seq_deq.begin(), seq_deq.end(), init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tFind in Sorted Deque: " << t << std::endl;
@@ -300,10 +294,9 @@ int main()
 
 	// list
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		/*std::find(list.begin(), list.end(), a);*/
+		std::find(list.begin(), list.end(), init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tFind in Random List: " << t << std::endl;
@@ -311,20 +304,18 @@ int main()
 
 	// set
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		set.find(a);
+		set.find(init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tBinary_search in Set: " << t << std::endl;
 	outf << "\tBinary_search in Set: " << t << std::endl;
 
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		m_set.find(a);
+		m_set.find(init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tBinary_search in M_Set: " << t << std::endl;
@@ -333,20 +324,18 @@ int main()
 
 	// map
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		map.find(a);
+		map.find(init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tBinary_search in Map: " << t << std::endl;
 	outf << "\tBinary_search in Map: " << t << std::endl;
 
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		m_map.find(a);
+		m_map.find(init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tBinary_search in M_Map: " << t << std::endl;
@@ -354,20 +343,18 @@ int main()
 
 	// u_set
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		u_set.find(a);
+		u_set.find(init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tFind in U_Set: " << t << std::endl;
 	outf << "\tFind in U_Set: " << t << std::endl;
 
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		u_m_set.find(a);
+		u_m_set.find(init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tFind in U_M_Set: " << t << std::endl;
@@ -375,20 +362,18 @@ int main()
 
 	// u_map
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		u_map.find(a);
+		u_map.find(init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tFind in U_Map: " << t << std::endl;
 	outf << "\tFind in U_Map: " << t << std::endl;
 
 	start();
-	for (size_t i = 0; i < n / 1000; ++i)
+	for (size_t i = 0; i < n / m; ++i)
 	{
-		a = rand() % (n - 1);
-		u_m_map.find(a);
+		u_m_map.find(init_arr->at(i));
 	}
 	t = stop();
 	std::cout << "\tFind in U_M_Map: " << t << std::endl;
@@ -404,8 +389,8 @@ int main()
 
 	std::cout << "Array do not access deleting" << std::endl;
 	outf << "Array do not access deleting" << std::endl;
-	/*
-	// vectorctor
+	
+	// vector
 	start();
 	for (size_t i = 0; i < n; ++i)
 	{
@@ -416,7 +401,7 @@ int main()
 	outf << "\tRandom Vector: " << t << std::endl;
 
 	start();
-	for (auto it = seq_vector.begin() + n / 2; it != seq_vector.end();)
+	for (auto it = seq_vector.begin() + n/2; it != seq_vector.end();)
 	{
 		it = seq_vector.erase(it != seq_vector.begin() ? it - 1 : it);
 	}
@@ -435,7 +420,7 @@ int main()
 	outf << "\tRandom Deque: " << t << std::endl;
 
 	start();
-	for (auto it = seq_deq.begin() + n / 2; it != seq_deq.end();)
+	for (auto it = seq_deq.begin() + n/2; it != seq_deq.end();)
 	{
 		//seq_deq.erase(seq_deq.begin() + (n-i)/2);
 		it = seq_deq.erase(it != seq_deq.begin() ? it - 1 : it);
@@ -443,37 +428,37 @@ int main()
 	t = stop();
 	std::cout << "\tSequential Deque: " << t << std::endl;
 	outf << "\tSequential Deque: " << t << std::endl;
-	*/
+	
 	// list
 	start();
 	auto it_list = list.begin();
 	std::advance(it_list, n/2);
-	for (size_t i = 0; i < n; ++i)
+	for ( ; it_list != list.end(); )
 	{		
-		it_list = (i % 2 == 0 ? list.erase(it_list) : --(list.erase(it_list))); 
+		it_list = list.erase(it_list != list.begin() ? --it_list : it_list);
 	}
 	t = stop();
-	std::cout << "\tList: " << t << std::endl;
+	std::cout << "\tList: " << t << '\t' << std::endl;
 	outf << "\tList: " << t << std::endl;
 
 	//set
 	start();
-	for (size_t i = 0; i < n; ++i)
+	auto it_set = set.begin();
+	std::advance(it_set, n/2);
+	for ( ; it_set != set.end(); )
 	{
-		auto it = set.begin();
-		std::advance(it, (n - i) / 2);
-		set.erase(it);
+		it_set = set.erase(it_set != set.begin() ? --it_set : it_set);
 	}
 	t = stop();
 	std::cout << "\tSet: " << t << std::endl;
 	outf << "\tSet: " << t << std::endl;
 
 	start();
-	for (size_t i = 0; i < n; ++i)
+	auto it_mset = m_set.begin();
+	std::advance(it_mset, n/2);
+	for ( ; it_mset != m_set.end(); )
 	{
-		auto it = m_set.begin();
-		std::advance(it, (n - i) / 2);
-		m_set.erase(it);
+		it_mset = m_set.erase(it_mset != m_set.begin() ? --it_mset : it_mset);
 	}
 	t = stop();
 	std::cout << "\tM_Set: " << t << std::endl;
@@ -481,22 +466,22 @@ int main()
 
 	// map
 	start();
-	for (size_t i = 0; i < n; ++i)
+	auto it_map = map.begin();
+	std::advance(it_map, n/2);
+	for ( ; it_map != map.end(); )
 	{
-		auto it = map.begin();
-		std::advance(it, (n - i) / 2);
-		map.erase(it);
+		it_map = map.erase(it_map != map.begin() ? --it_map : it_map);
 	}
 	t = stop();
 	std::cout << "\tMap: " << t << std::endl;
 	outf << "\tMap: " << t << std::endl;
 
 	start();
-	for (size_t i = 0; i < n; ++i)
+	auto it_mmap = m_map.begin();
+	std::advance(it_mmap, n/2);
+	for ( ; it_mmap != m_map.end(); )
 	{
-		auto it = m_map.begin();
-		std::advance(it, (n - i) / 2);
-		m_map.erase(it);
+		it_mmap = m_map.erase(it_mmap != m_map.begin() ? --it_mmap : it_mmap);
 	}
 	t = stop();
 	std::cout << "\tM_Map: " << t << std::endl;
